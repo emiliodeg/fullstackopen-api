@@ -20,3 +20,20 @@ content-type: application/json
     "name": "Harry Mcree",
     "number": "777-99887"
 }
+
+###
+POST http://localhost:3001/api/persons
+content-type: application/json
+
+{
+    "name": "Harry Mcree"    
+}
+
+###
+POST http://localhost:3001/api/persons
+content-type: application/json
+
+{
+    "name": "Dan Abramov",
+    "number": "0123-8899"    
+}
