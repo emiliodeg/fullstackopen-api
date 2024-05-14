@@ -1,4 +1,5 @@
-const http = require("http");
+const express = require("express");
+const app = express();
 
 const persons = [
   {
@@ -22,11 +23,14 @@ const persons = [
     number: "39-23-6423122",
   },
 ];
-const app = http.createServer((request, response) => {
-  response.writeHead(200, { "Content-Type": "application/json" });
-  response.end(JSON.stringify(persons));
+
+app.get("/", (request, response) => {
+  response.json(persons);
+});
+
+app.get("/info", (request, response) => {
+  response.send(`Phonebook has info for ${persons.length} people.<br/>${Date()}`);
 });
 
 const PORT = 3001;
-app.listen(PORT);
-console.log(`Server running on port ${PORT}`);
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
