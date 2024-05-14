@@ -1,4 +1,22 @@
-DELETE http://localhost:3001/api/persons/4
+DELETE http://localhost:3001/api/persons/15199
 
 ###
 GET http://localhost:3001/api/persons
+
+###
+POST http://localhost:3001/api/persons
+content-type: application/json
+
+{
+    "name": "John Doe",
+    "number": "555-9955"
+}
+
+###
+POST http://localhost:3001/api/persons
+content-type: application/json
+
+{
+    "name": "Harry Mcree",
+    "number": "777-99887"
+}
