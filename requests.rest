@@ -34,6 +34,15 @@ POST http://localhost:3001/api/persons
 content-type: application/json
 
 {
-    "name": "Dan Abramov",
+    "name": "New Dan Abramov",
+    "number": "0123-8899"    
+}
+
+###
+POST http://localhost:3001/api/persons
+content-type: application/json
+
+{
+    "name": "New Dan Steward",
     "number": "0123-8899"    
 }
