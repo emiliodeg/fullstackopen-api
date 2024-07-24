@@ -46,3 +46,54 @@ content-type: application/json
     "name": "New Dan Steward",
     "number": "0123-8899"    
 }
+
+### Testing server online
+
+DELETE https://fullstackopen-api-emiliodeg.fly.dev/api/persons/69619
+
+###
+GET https://fullstackopen-api-emiliodeg.fly.dev/api/persons
+
+###
+POST https://fullstackopen-api-emiliodeg.fly.dev/api/persons
+content-type: application/json
+
+{
+    "name": "John Doe",
+    "number": "555-9955"
+}
+
+###
+POST https://fullstackopen-api-emiliodeg.fly.dev/api/persons
+content-type: application/json
+
+{
+    "name": "Harry Mcree",
+    "number": "777-99887"
+}
+
+###
+POST https://fullstackopen-api-emiliodeg.fly.dev/api/persons
+content-type: application/json
+
+{
+    "name": "Harry Mcree"    
+}
+
+###
+POST https://fullstackopen-api-emiliodeg.fly.dev/api/persons
+content-type: application/json
+
+{
+    "name": "New Dan Abramov",
+    "number": "0123-8899"    
+}
+
+###
+POST https://fullstackopen-api-emiliodeg.fly.dev/api/persons
+content-type: application/json
+
+{
+    "name": "New Dan Steward",
+    "number": "0123-8899"    
+}
