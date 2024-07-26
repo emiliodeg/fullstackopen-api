@@ -7,6 +7,9 @@ GET http://localhost:3001/info
 GET http://localhost:3001/api/persons
 
 ###
+DELETE  http://localhost:3001/api/persons/66a3a9704556c8f1c673f040
+
+###
 POST http://localhost:3001/api/persons
 content-type: application/json
 
@@ -51,6 +54,8 @@ content-type: application/json
 }
 
 ### Testing server online
+
+GET https://fullstackopen-api-emiliodeg.fly.dev/info
 
 DELETE https://fullstackopen-api-emiliodeg.fly.dev/api/persons/69619
 

@@ -13,10 +13,10 @@ app.use(express.json());
 app.use(express.static("dist"));
 app.use(morgan(":method :url :status :res[content-length] - :response-time ms :json-body"));
 
-let persons = [];
+app.get("/info", async (request, response, next) => {
+  const count = await Person.countDocuments();
 
-app.get("/info", (request, response) => {
-  response.send(`Phonebook has info for ${persons.length} people.<br/>${Date()}`);
+  response.send(`Phonebook has info for ${count} people.<br/>${Date()}`);
 });
 
 app.get("/api/persons", (request, response, next) => {
@@ -76,15 +76,12 @@ app.put("/api/persons/:id", (request, response, next) => {
     .catch(next);
 });
 
-app.get("/api/persons/:id", (request, response) => {
-  const id = Number(request.params.id);
-  const person = persons.find((person) => person.id === id);
+app.get("/api/persons/:id", (request, response, next) => {
+  const { id } = request.params;
 
-  if (!person) {
-    return response.status(404).end();
-  }
-
-  response.json(person);
+  Person.findById(id)
+    .then((result) => response.json(result))
+    .catch(next);
 });
 
 app.delete("/api/persons/:id", (request, response, next) => {
