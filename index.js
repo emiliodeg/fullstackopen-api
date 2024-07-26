@@ -64,7 +64,7 @@ app.post("/api/persons", (request, response) => {
     number,
   });
 
-  person.save().then((result) => response.json(result));  
+  person.save().then((result) => response.json(result));
 });
 
 app.get("/api/persons/:id", (request, response) => {
@@ -78,12 +78,10 @@ app.get("/api/persons/:id", (request, response) => {
   response.json(person);
 });
 
-app.delete("/api/persons/:id", (request, response) => {
-  const id = Number(request.params.id);
-
-  persons = persons.filter((person) => person.id !== id);
-
-  response.status(204).end();
+app.delete("/api/persons/:id", (request, response, next) => {
+  Person.findByIdAndDelete(request.params.id)
+    .then(() => response.status(204).end())
+    .catch((error) => next(error));
 });
 
 const PORT = process.env.PORT || 3001;
