@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(express.static("dist"));
 app.use(morgan(":method :url :status :res[content-length] - :response-time ms :json-body"));
 
-app.get("/info", async (request, response, next) => {
+app.get("/info", async (request, response) => {
   const count = await Person.countDocuments();
 
   response.send(`Phonebook has info for ${count} people.<br/>${Date()}`);
