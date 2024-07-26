@@ -13,28 +13,7 @@ app.use(express.json());
 app.use(express.static("dist"));
 app.use(morgan(":method :url :status :res[content-length] - :response-time ms :json-body"));
 
-let persons = [
-  {
-    id: 1,
-    name: "Arto Hellas",
-    number: "040-123456",
-  },
-  {
-    id: 2,
-    name: "Ada Lovelace",
-    number: "39-44-5323523",
-  },
-  {
-    id: 3,
-    name: "Dan Abramov",
-    number: "12-43-234345",
-  },
-  {
-    id: 4,
-    name: "Mary Poppendieck",
-    number: "39-23-6423122",
-  },
-];
+let persons = [];
 
 app.get("/info", (request, response) => {
   response.send(`Phonebook has info for ${persons.length} people.<br/>${Date()}`);
@@ -55,19 +34,44 @@ app.post("/api/persons", (request, response, next) => {
     });
   }
 
-  // if (persons.find((person) => person.name.toLowerCase() === name.toLowerCase())) {
-  //   return response.status(400).json({
-  //     error: "name must be unique",
-  //   });
-  // }
-
   const person = new Person({
     name,
     number,
   });
 
-  person
-    .save()
+  Person.findOne({ name })
+    .then((personExists) => {
+      if (personExists) {
+        personExists
+          .set({ number })
+          .save()
+          .then((result) => response.json(result))
+          .catch(next);
+        return;
+      }
+
+      person
+        .save()
+        .then((result) => response.json(result))
+        .catch(next);
+    })
+    .catch(next);
+});
+
+app.put("/api/persons/:id", (request, response, next) => {
+  const { number, name } = request.body;
+
+  if (!name && !number) {
+    return response.status(400).json({
+      error: "name or number missing",
+    });
+  }
+
+  const update = {};
+  if (name) update.name = name;
+  if (number) update.number = number;
+
+  Person.findByIdAndUpdate(request.params.id, update, { new: true })
     .then((result) => response.json(result))
     .catch(next);
 });

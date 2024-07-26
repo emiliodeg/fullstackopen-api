@@ -1,4 +1,4 @@
-DELETE http://localhost:3001/api/persons/66a39accb21499ebd4a3058
+DELETE http://localhost:3001/api/persons/66a39dfb6775e4961521b70e
 
 ###
 GET http://localhost:3001/info
@@ -20,7 +20,7 @@ POST http://localhost:3001/api/persons
 content-type: application/json
 
 {
-    "name": "Harry Mcree",
+    "name": "John Doe",
     "number": "777-99887"
 }
 
