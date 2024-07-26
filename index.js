@@ -44,14 +44,20 @@ app.post("/api/persons", (request, response, next) => {
       if (personExists) {
         personExists
           .set({ number })
-          .save()
+          .save({
+            runValidators: true,
+            context: "query",
+          })
           .then((result) => response.json(result))
           .catch(next);
         return;
       }
 
       person
-        .save()
+        .save({
+          runValidators: true,
+          context: "query",
+        })
         .then((result) => response.json(result))
         .catch(next);
     })
@@ -71,7 +77,7 @@ app.put("/api/persons/:id", (request, response, next) => {
   if (name) update.name = name;
   if (number) update.number = number;
 
-  Person.findByIdAndUpdate(request.params.id, update, { new: true })
+  Person.findByIdAndUpdate(request.params.id, update, { new: true, runValidators: true, context: "query" })
     .then((result) => response.json(result))
     .catch(next);
 });
