@@ -40,11 +40,13 @@ app.get("/info", (request, response) => {
   response.send(`Phonebook has info for ${persons.length} people.<br/>${Date()}`);
 });
 
-app.get("/api/persons", (request, response) => {
-  Person.find({}).then((result) => response.json(result));
+app.get("/api/persons", (request, response, next) => {
+  Person.find({})
+    .then((result) => response.json(result))
+    .catch(next);
 });
 
-app.post("/api/persons", (request, response) => {
+app.post("/api/persons", (request, response, next) => {
   const { name, number } = request.body;
 
   if (!name || !number) {
@@ -64,7 +66,10 @@ app.post("/api/persons", (request, response) => {
     number,
   });
 
-  person.save().then((result) => response.json(result));
+  person
+    .save()
+    .then((result) => response.json(result))
+    .catch(next);
 });
 
 app.get("/api/persons/:id", (request, response) => {
@@ -81,7 +86,17 @@ app.get("/api/persons/:id", (request, response) => {
 app.delete("/api/persons/:id", (request, response, next) => {
   Person.findByIdAndDelete(request.params.id)
     .then(() => response.status(204).end())
-    .catch((error) => next(error));
+    .catch(next);
+});
+
+app.use((error, request, response, next) => {
+  console.error(error.message);
+
+  if (error.name === "CastError") {
+    return response.status(400).send({ error: "malformatted id" });
+  }
+
+  next(error);
 });
 
 const PORT = process.env.PORT || 3001;
